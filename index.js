@@ -7,7 +7,7 @@ app.set('port', (process.env.PORT || 8000))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {  
-  response.send(`TEST: ${process.env['super-secret']}`)
+  response.send(`TEST: ${process.env.SUPER_SECRET}`)
 })
 
 app.listen(app.get('port'), function() {

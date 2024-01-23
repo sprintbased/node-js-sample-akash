@@ -7,7 +7,7 @@ app.set('port', (process.env.PORT || 8000))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {  
-  response.send(process.env.TEST_ROUTE)
+  response.send(`TEST: ${process.env.TEST_ROUTE}`)
 })
 
 app.listen(app.get('port'), function() {

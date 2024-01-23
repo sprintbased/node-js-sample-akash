@@ -8,7 +8,7 @@ app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {  
   console.debug(process.env)
-  response.send(`TEST: ${process.env}`)
+  response.send(JSON.stringify(process.env))
 })
 
 app.listen(app.get('port'), function() {

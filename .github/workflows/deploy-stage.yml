@@ -36,9 +36,35 @@ jobs:
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build image
-        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:latest ./
+        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }} ./
         # working-directory: ./
 
       - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}/tt-api:latest
+        run: docker push ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
         #${{ github.sha }}
+
+  deploy-dev:
+    if: contains(github.ref, 'heads')
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          repository: sprintbased/node-js-sample-akash
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: 4.0.0
+
+      - run: kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
+        working-directory: overlays/production/patches/tt-api-image
+
+      - run: |
+          git config user.email "rob.runka@sprintbased.com"
+          git config user.name "sprintbased"
+          git commit -am "Update image to ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}"
+          git pull --rebase
+          git push        

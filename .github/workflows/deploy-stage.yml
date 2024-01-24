@@ -56,12 +56,12 @@ jobs:
           token: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
           path: gitops-argocd-sops
 
-      - uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: 4.0.0
+      # - uses: imranismail/setup-kustomize@v1
+      #   with:
+      #     kustomize-version: 4.0.0
 
-      - working-directory: overlays/production/patches/tt-api-image.yaml
-        run: kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
+      # - working-directory: overlays/production/patches/tt-api-image.yaml
+      #   run: kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
         
       - run: |    
 

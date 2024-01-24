@@ -60,15 +60,11 @@ jobs:
         with:
           kustomize-version: 4.0.0
 
-      - run: kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
-        working-directory: overlays/production/patches/tt-api-image.yaml
-
-# cd overlays/production/patches/tt-api-image.yaml 
-#           kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
-
+      - working-directory: overlays/production/patches/tt-api-image.yaml
+        run: kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
+        
       - run: |    
-          cd infra-repo/sprintbased/gitops-argocd-sops/overlays/production/patches
-          kustomize edit set image ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
+
           git config user.email "rob.runka@sprintbased.com"
           git config user.name "sprintbased"
           git commit -am "Update image to ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}"

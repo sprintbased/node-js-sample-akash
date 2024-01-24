@@ -54,7 +54,7 @@ jobs:
           repository: sprintbased/gitops-argocd-sops
           ref: master
           token: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
-          working-directory: overlays/production
+          working-directory: sprintbased/gitops-argocd-sops/overlays/production
 
       - uses: imranismail/setup-kustomize@v1
         with:

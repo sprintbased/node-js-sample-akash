@@ -49,8 +49,8 @@ jobs:
     needs:
       - build-push-artifact
     steps:
-
       - uses: actions/checkout@v3
+        working-directory: ./
         with:
           repository: sprintbased/gitops-argocd-sops
           ref: master

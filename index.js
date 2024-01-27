@@ -11,6 +11,6 @@ app.get('/', function(request, response) {
 })
 
 app.listen(app.get('port'), function() {
-  console.debug(process.env.API_DOMAIN)
+  console.log("API_DOMAIN:",process.env.API_DOMAIN)
   console.log("Node app is running at localhost:" + app.get('port'))
 })

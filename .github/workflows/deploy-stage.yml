@@ -36,11 +36,11 @@ jobs:
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build image
-        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }} ./
+        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:latest ./
         # working-directory: ./
 
       - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}/tt-api:sha-${{ github.sha }}
+        run: docker push ${{ env.GAR_LOCATION }}/tt-api:latest
         #${{ github.sha }}
 
   # deploy-dev:

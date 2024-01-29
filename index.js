@@ -7,6 +7,7 @@ app.set('port', (process.env.PORT || 8000))
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', function(request, response) {    
+  console.debug("HEALTCHECK",process.env.API_DOMAIN)
   response.send(JSON.stringify(process.env.API_DOMAIN))
 })
 

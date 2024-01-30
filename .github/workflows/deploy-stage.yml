@@ -43,18 +43,28 @@ jobs:
         run: |-
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      - name: Build image - latest
-        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:latest ./
-        # working-directory: ./
+      - uses: docker/build-push-action@v2
+        if: steps.cz.outcome == 'success'
+        with:
+          labels: ${{ steps.meta.outputs.labels }}
+          push: true
+          tags: |
+            ${{ env.GAR_LOCATION }}:latest 
+            ${{ env.GAR_LOCATION }}:${{ steps.cz.outputs.version }}
+          target: prod
 
-      - name: Push image - latest
-        run: docker push ${{ env.GAR_LOCATION }}/tt-api:latest
+      # - name: Build image - latest
+      #   run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:latest ./
+      #   # working-directory: ./
 
-      - name: Build image - semver
-        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:${{ steps.cz.outputs.version }} ./
+      # - name: Push image - latest
+      #   run: docker push ${{ env.GAR_LOCATION }}/tt-api:latest
 
-      - name: Push image - semver
-        run: docker push ${{ env.GAR_LOCATION }}/tt-api:${{ steps.cz.outputs.version }}     
+      # - name: Build image - semver
+      #   run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:${{ steps.cz.outputs.version }} ./
+
+      # - name: Push image - semver
+      #   run: docker push ${{ env.GAR_LOCATION }}/tt-api:${{ steps.cz.outputs.version }}     
         #${{ github.sha }}
 
   # deploy-dev:

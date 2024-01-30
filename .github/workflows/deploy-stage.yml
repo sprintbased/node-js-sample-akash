@@ -51,7 +51,7 @@ jobs:
           tags: |
             ${{ env.GAR_LOCATION }}:latest 
             ${{ env.GAR_LOCATION }}:${{ steps.cz.outputs.version }}
-          target: prod
+          # target: prod
 
       # - name: Build image - latest
       #   run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:latest ./

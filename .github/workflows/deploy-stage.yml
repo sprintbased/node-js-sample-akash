@@ -43,12 +43,16 @@ jobs:
         run: |-
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      - name: Build image
+      - name: Build image - latest
         run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:latest ./
         # working-directory: ./
 
       - name: Push image - latest
         run: docker push ${{ env.GAR_LOCATION }}/tt-api:latest
+
+      - name: Build image - semver
+        run: docker build -t ${{ env.GAR_LOCATION }}/tt-api:${{ steps.cz.outputs.version }} ./
+
       - name: Push image - semver
         run: docker push ${{ env.GAR_LOCATION }}/tt-api:${{ steps.cz.outputs.version }}     
         #${{ github.sha }}

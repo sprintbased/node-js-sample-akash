@@ -25,6 +25,14 @@ jobs:
         with:
             credentials_json: '${{ secrets.SERVICE_ACCOUNT_KEY }}'
 
+      - id: cz
+        continue-on-error: false
+        uses: commitizen-tools/commitizen-action@master
+        with:
+          github_token: ${{ secrets.ACTIONS_GITHUB_TOKEN }}
+
+      - run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
 

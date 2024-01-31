@@ -11,7 +11,7 @@ app.get('/healthz', function(request, response) {
   response.send("Health check passed!")
 })
 
-app.get('/', function(request, response) {      
+app.get('/bar', function(request, response) {      
   console.debug("Hello World!")
   response.send("Hello World!")
 })

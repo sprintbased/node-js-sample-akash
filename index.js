@@ -6,8 +6,12 @@ dotenv.config();
 app.set('port', (process.env.PORT || 8000))
 app.use(express.static(__dirname + '/public'))
 
-app.get('/', function(request, response) {    
-  console.debug("HEALTCHECK",process.env.API_DOMAIN)
+app.get('/healthz', function(request, response) {    
+  
+  response.send("success")
+})
+
+app.get('/', function(request, response) {      
   response.send(JSON.stringify(process.env.API_DOMAIN))
 })
 

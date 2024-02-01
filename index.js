@@ -3,7 +3,7 @@ var dotenv = require('dotenv');
 var app = express()
 
 dotenv.config();
-app.set('port', (process.env.PORT || 8000))
+app.set('port', 3001)
 app.use(express.static(__dirname + '/public'))
 
 app.get('/healthz', function(request, response) {    
